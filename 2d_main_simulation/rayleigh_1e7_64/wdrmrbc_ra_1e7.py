@@ -52,7 +52,7 @@ f=0.05
 
 Prandtl = 1.0
 dealias = 3/2
-stop_sim_time = 3000
+stop_sim_time = 2500
 timestepper = d3.RK222
 max_timestep = 0.125
 dtype = np.float64
@@ -194,6 +194,12 @@ analysis.add_task(d3.Integrate(0.5 * uy2,('x', 'z')),name='ke by uy')
 analysis.add_task(d3.Integrate(uz,('x', 'z')),name='tot uz')
 analysis.add_task(d3.Integrate(ux,('x', 'z')),name='tot ux')
 analysis.add_task(d3.Integrate(uy,('x', 'z')),name='tot uy')
+
+analysis.add_task(M, name='moist buoyancy')
+analysis.add_task(D, name='dry buoyancy')
+
+#analysis.add_task(d3.Integrate(np.maximum(M-D+N_s2*z,0), ('x', 'z')), name='integ liq w')
+
 #analysis.add_task(d3.Integrate(uz2,('z', 'x')),name='ke by z zx')
 #analysis.add_task(d3.Integrate(ux2,('z', 'x')),name='ke by x zx')
 #analysis.add_task(d3.Integrate(np.absolute(uz),('x', 'z')),name='sum by z xz')

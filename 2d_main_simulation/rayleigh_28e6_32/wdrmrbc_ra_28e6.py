@@ -193,6 +193,11 @@ analysis.add_task(d3.Integrate(0.5 * uy2,('x', 'z')),name='ke by uy')
 analysis.add_task(d3.Integrate(uz,('x', 'z')),name='tot uz')
 analysis.add_task(d3.Integrate(ux,('x', 'z')),name='tot ux')
 analysis.add_task(d3.Integrate(uy,('x', 'z')),name='tot uy')
+
+analysis.add_task(M, name='moist buoyancy')
+analysis.add_task(D, name='dry buoyancy')
+
+#analysis.add_task(d3.Integrate(np.maximum(M-D+N_s2*z,0), ('x', 'z')), name='integ liq w')
 #analysis.add_task(d3.Integrate(uz2,('z', 'x')),name='ke by z zx')
 #analysis.add_task(d3.Integrate(ux2,('z', 'x')),name='ke by x zx')
 #analysis.add_task(d3.Integrate(np.absolute(uz),('x', 'z')),name='sum by z xz')

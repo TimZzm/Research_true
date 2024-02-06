@@ -19,7 +19,7 @@ from os import listdir
 # Parameters
 Lx, Lz = 40,1
 Nx, Nz = 1280, 32
-Ra_M = 4.5e5
+Ra_M = 2.8e6
 D_0 = 0
 D_H = 1/3
 M_0 = 0
@@ -107,6 +107,40 @@ grad_M = d3.grad(M) + ez*lift(tau_M1) # First-order reduction
 grad_D = d3.grad(D) + ez*lift(tau_D1) # First-order reduction
 
 
+            
+            
+folder_dir = "analysis"
+
+file_paths = [os.path.join(folder_dir, file) for file in listdir(folder_dir) if os.path.isfile(os.path.join(folder_dir, file)) and file.endswith('.h5')]
+#sort by the number in the file name
+file_paths.sort(key=lambda f: int(re.sub('\D', '', f)))
+print(file_paths)
+
+if not os.path.exists('liquid water'):    
+    os.mkdir('liquid water')
+n=0
+for file in file_paths:
+    with h5py.File(file, mode='r') as file:
+        moistbuoyancy = file['tasks']['moist buoyancy']
+        drybuoyancy = file['tasks']['dry buoyancy']
+        ql=np.maximum(moistbuoyancy[:]-drybuoyancy[:]+N_s2*z,0)
+        st = file['scales/sim_time']
+        simtime = np.array(st)
+        for t in range(0, len(simtime)):
+            qli=np.transpose(ql[t,:,:])
+            plt.contourf(qli, cmap='RdBu_r')
+            plt.colorbar(label='liquid water')
+            plt.xlabel('x')
+            plt.ylabel('z')
+            n=n+1
+            # Add time title
+            title = "t="+str(st[t])
+            plt.title(title)
+            plt.savefig(f'liquid water/liquidwater_{"%04d" % n}.png', dpi=200,bbox_inches='tight')
+            matplotlib.pyplot.close()            
+            
+
+
 folder_dir = "snapshots"
 
 file_paths = [os.path.join(folder_dir, file) for file in listdir(folder_dir) if os.path.isfile(os.path.join(folder_dir, file)) and file.endswith('.h5')]
@@ -177,6 +211,9 @@ for file in file_paths:
             matplotlib.pyplot.close()            
             
             
+
+
+                        
             
 folder_dir = "snapshots"
 

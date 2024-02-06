@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#SBATCH --nodes=8
-#SBATCH --tasks-per-node=4
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=32
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=64GB
-#SBATCH --time=2:00:00
+#SBATCH --mem=128GB
+#SBATCH --time=3:00:00
 #SBATCH --job-name='wdrmrbc_ra_45e6_64'
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zz3645@nyu.edu

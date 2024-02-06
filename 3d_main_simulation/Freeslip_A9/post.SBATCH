@@ -4,11 +4,11 @@
 #SBATCH --tasks-per-node=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=40GB
-#SBATCH --time=04:00:00
-#SBATCH --job-name='post_7e6'
+#SBATCH --time=2:00:00
+#SBATCH --job-name='post_3d_A9_Fr'
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zz3645@nyu.edu
-#SBATCH --output='postanalysis_7e6.out'
+#SBATCH --output='post_3d_A9_Fr.out'
 
 module purge
 

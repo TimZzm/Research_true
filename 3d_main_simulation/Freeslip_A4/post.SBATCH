@@ -5,10 +5,10 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=40GB
 #SBATCH --time=04:00:00
-#SBATCH --job-name='post_7e6'
+#SBATCH --job-name='post_3d_A4_Fr'
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zz3645@nyu.edu
-#SBATCH --output='postanalysis_7e6.out'
+#SBATCH --output='post_3d_A4_Fr.out'
 
 module purge
 
