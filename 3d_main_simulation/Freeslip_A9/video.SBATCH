@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=128GB
+#SBATCH --mem=40GB
 #SBATCH --time=6:00:00
 #SBATCH --job-name='vid'
 #SBATCH --mail-type=ALL
