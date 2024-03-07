@@ -116,8 +116,8 @@ file_paths = [os.path.join(folder_dir, file) for file in listdir(folder_dir) if 
 file_paths.sort(key=lambda f: int(re.sub('\D', '', f)))
 print(file_paths)
 
-if not os.path.exists('liquid water'):    
-    os.mkdir('liquid water')
+if not os.path.exists('liquid_water'):    
+    os.mkdir('liquid_water')
 n=0
 for file in file_paths:
     with h5py.File(file, mode='r') as file:

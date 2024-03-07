@@ -1,0 +1,2 @@
+2024-02-06 15:00:49,223 matplotlib.animation 0/1 INFO :: Animation.save using <class 'matplotlib.animation.FFMpegWriter'>
+2024-02-06 15:00:49,224 matplotlib.animation 0/1 INFO :: MovieWriter._run: running command: ffmpeg -f rawvideo -vcodec rawvideo -s 3200x800 -pix_fmt rgba -r 4.0 -i pipe: -vcodec h264 -pix_fmt yuv420p -y liquidwater_A9.mp4

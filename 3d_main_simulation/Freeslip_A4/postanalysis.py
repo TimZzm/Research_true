@@ -27,7 +27,7 @@ N_s2 = 2
 D_0 = 0
 D_H = 1
 M_0 = 0
-M_H = -1
+M_H = -0.999
 
 dealias = 3/2
 stop_sim_time = 1500
@@ -117,6 +117,22 @@ print(file_paths)
 if not os.path.exists('liquid_water'):    
     os.mkdir('liquid_water')
 n=0
+
+recorded = False
+for file in file_paths:
+    with h5py.File(file, mode='r') as file:
+        if recorded == False:
+            max_level_old = np.max(file['tasks']['integ LqW by Z'])
+            min_level_old = np.min(file['tasks']['integ LqW by Z'])
+            recorded = True
+        else:
+            max_level_new = np.max(file['tasks']['integ LqW by Z'])
+            min_level_new = np.min(file['tasks']['integ LqW by Z'])
+            if max_level_new > max_level_old:
+                max_level_old = max_level_new
+            if min_level_new < min_level_old:
+                min_level_old = min_level_new
+
 for file in file_paths:
     with h5py.File(file, mode='r') as file:
         liq_wat_0 = file['tasks']['integ LqW by Z'] # This gives shape (1000,128,128, 1)
@@ -125,7 +141,11 @@ for file in file_paths:
         simtime = np.array(st)
         for t in range(len(simtime)):
             liq_wat_T=np.transpose(liq_wat[t,:,:])
-            plt.contourf(liq_wat_T, cmap='RdBu_r')
+            if np.max(liq_wat_T) - np.min(liq_wat_T) > 0.05:
+                levels = np.arange(min_level_old, max_level_old, 0.02)
+                plt.contourf(liq_wat_T, levels, cmap='Spectral_r')
+            else:
+                plt.contourf(liq_wat_T, cmap='Spectral_r')
             plt.colorbar(label='integrated liquid water')
             plt.xlabel('x')
             plt.ylabel('y')
@@ -133,5 +153,5 @@ for file in file_paths:
             # Add time title
             title = "t="+str(st[t])
             plt.title(title)
-            plt.savefig(f'liquid water/liquidwater_{"%04d" % n}.png', dpi=200,bbox_inches='tight')
+            plt.savefig(f'liquid_water/liquidwater_{"%04d" % n}.png', dpi=200,bbox_inches='tight')
             matplotlib.pyplot.close()

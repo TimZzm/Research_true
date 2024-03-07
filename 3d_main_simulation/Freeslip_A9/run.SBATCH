@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#SBATCH --nodes=9
-#SBATCH --tasks-per-node=8
+#SBATCH --nodes=3
+#SBATCH --tasks-per-node=24
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=288GB
-#SBATCH --time=40:00:00
+#SBATCH --time=50:00:00
 #SBATCH --job-name='3d_A9_Rstd'
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zz3645@nyu.edu

@@ -33,7 +33,7 @@ M_0 = 0
 M_H = -1
 
 dealias = 3/2
-stop_sim_time = 2000
+stop_sim_time = 4000
 timestepper = d3.RK222
 max_timestep = 0.125
 dtype = np.float64
@@ -150,10 +150,10 @@ M['g'] += (M_H-M_0)*z # Add linear background
 
 # %%
 # Analysis
-snapshots = solver.evaluator.add_file_handler('snapshots', sim_dt=1, max_writes=50)
-snapshots.add_task(M, name='moist buoyancy')
-snapshots.add_task(D, name='dry buoyancy')
-snapshots.add_task(u, name='velocity')
+#snapshots = solver.evaluator.add_file_handler('snapshots', sim_dt=1, max_writes=50)
+#snapshots.add_task(M, name='moist buoyancy')
+#snapshots.add_task(D, name='dry buoyancy')
+#snapshots.add_task(u, name='velocity')
 
 analysis = solver.evaluator.add_file_handler('analysis', sim_dt=1, max_writes=1000)
 #analysis.add_task(d3.Integrate(nu*d3.div(grad_ux),('x','z')), name='fric x')
@@ -161,7 +161,10 @@ analysis = solver.evaluator.add_file_handler('analysis', sim_dt=1, max_writes=10
 #analysis.add_task(d3.Integrate(nu*d3.div(grad_uz),('x','z')), name='fric z')
 
 analysis.add_task(d3.Integrate(0.5 * (ux2 + uz2 + uy2),('x', 'y','z')), name='total kinetic energy')
-analysis.add_task(d3.Average(0.5 * (ux2 + uz2 + uy2),('x', 'y','z')),name='mean kinetic energy')
+
+analysis.add_task(d3.Average(0.5 * (ux2 + uz2 + uy2),('x', 'y')),name='avg KE by xy')
+analysis.add_task(d3.Average(M,('x', 'y')),name='avg M by xy')
+analysis.add_task(d3.Average(-D,('x', 'y')),name='avg -D by xy')
 
 analysis.add_task(d3.Integrate(0.5 * uz2,('x', 'y', 'z')),name='ke by uz')
 analysis.add_task(d3.Integrate(0.5 * ux2,('x', 'y', 'z')),name='ke by ux')
@@ -175,6 +178,7 @@ analysis.add_task(d3.Integrate(uy,('x', 'y', 'z')),name='tot uy')
 # analysis.add_task(D, name='dry buoyancy')
 
 analysis.add_task(d3.Integrate(LqW, ('z')), name='integ LqW by Z')
+analysis.add_task(d3.Integrate(LqW, ('x', 'y')), name='avg LqW by Z')
 
 #analysis.add_task(d3.Integrate(uz2,('z', 'x')),name='ke by z zx')
 #analysis.add_task(d3.Integrate(ux2,('z', 'x')),name='ke by x zx')
